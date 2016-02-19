@@ -31,9 +31,21 @@ class SkuUpdater
 	 * --
 	 * @param $file_name
 	 */
-	public function __construct($file_name,$file_options) {
+	public function __construct($file_name,$file_options,$mage_app_directory) {
 		$this->resourceArray = BatchCSVProcessor::processResourceToArray(fopen($file_name,'rb'));
 		$this->resourceOptions = $file_options;
+		
+		// process the request to include mage core ( bootstrap & mage . php )
+        if ($mage_app_directory && is_dir($mage_app_directory)) {
+            if (file_exists($mage_app_directory . '/bootstrap.php')) {
+                // include the bootstrapped file for Magento ( this acts as a pre-processor )
+                include $mage_app_directory . '/bootstrap.php';
+            }
+            if (file_exists($mage_app_directory . '/mage.php')) {
+                // include the mage.php file
+                include $mage_app_directory . '/mage.php';
+            }
+        }
 	}
 
 	/**
