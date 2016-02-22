@@ -4,7 +4,17 @@
  * @package SkuUpdater
  */
 
+/*
+	Require autoload for the BatchCSVProcessor
+*/
 require_once 'autoload.php';
+
+/*
+	NEWLINE - \n
+	_TAB_ - \t
+*/
+define('NEWLINE',"\n");
+define('_TAB_',"\t");
 
 /**
  * Class SkuUpdater
