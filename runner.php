@@ -22,12 +22,17 @@ $options = [
 	// all of the colloquial options
 	"status_head_choice_update" => "Changed",
 	"status_head_choice_delete" => "DELETE THIS SKU",
+
+	"verbose" => TRUE,
+
+	// dangerous?
+	"dangerous" => TRUE
 ];
 
 /**
  * New up a new instance of the SkuUpdater. 
  */
-$updater = new SkuUpdater("skusToUpdate.csv",$options);
+$updater = new SkuUpdater("skusToUpdate.csv",$options,__DIR__.'/public_html/shop/app');
 
 /**
  * Execute the updateSKUs method.
