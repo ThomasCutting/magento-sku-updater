@@ -148,17 +148,22 @@ class SkuUpdater
 		}
 
 		// get the product by (provided) selector.
-		$product = Mage::getModel('catalog/product')->loadByAttribte($selector_attribute,$selector_id);
+		$product = Mage::getModel('catalog/product')->loadByAttribute($selector_attribute,$selector_id);
 
-		// try to delete the product
-		try {
-			$product->delete();
-		} catch(Exception $e) {
-			error_log($e->getTraceAsString());
+		// check to see if product is valid
+		if($product) {
+			try {
+				// try to delete the product
+				$product->delete();
+			} catch(Exception $e) {
+				error_log($e->getTraceAsString());
+			}
+			// be sure to fulfill parents objective.
+			return true;
+		} else {
+			// did not fulfill parents objective.
+			return false;
 		}
-
-		// be sure to fulfill parents objective.
-		return true;
 	}
 
 	/**
@@ -174,12 +179,9 @@ class SkuUpdater
 		}
 
 		foreach ($selector_ids as $selector_id) {
-			// get the product by (provided) selector.
-			$product = Mage::getModel('catalog/product')->loadByAttribte($selector_attribute,$selector_id);
-
-			// try to delete the product
+			// try to delete via selector attribute and selector id's.
 			try {
-				$product->delete();
+				$this->deleteProductBySelector($selector_attribute,$selector_id);
 			} catch(Exception $e) {
 				error_log($e->getTraceAsString());
 			}
