@@ -119,10 +119,20 @@ class SkuUpdater
 	 */
 	private function updateSKU($old_sku,$new_sku) {
 		// get product model, update sku, and save.
-		$updated_sku_model = Mage::getModel('catalog/product')
-			->loadByAttribte('sku',$old_sku)
-			->setSKU($new_sku)
-			->save();
+		$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$old_sku);
+		$options = $this->resourceOptions;
+
+		if($product) {
+			$product->setSku($new_sku)->save();
+			if($options['verbose']) {
+				echo NEWLINE."Updated SKU " . $old_sku . " to ( -> ) " . $new_sku.NEWLINE.NEWLINE;
+			}
+		} else {
+			if($options['verbose']) {
+				echo NEWLINE."SKU Doesn't Exist?".NEWLINE;
+			}
+		}
+		//
 	}
 
 	/**
