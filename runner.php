@@ -13,16 +13,17 @@ require_once 'autoload.php';
  * - configure all of the colloquial.
  */
 $options = [
-	// all column head options
+	// all column head options.
 	"status_head" => "Status",
 	"old_sku_head" => "Existing Web SKU",
 	"new_sku_head" => "SKU we want listed",
 	"upc_head" => "UPC",
 
-	// all of the colloquial options
+	// all of the colloquial options.
 	"status_head_choice_update" => "Changed",
 	"status_head_choice_delete" => "DELETE THIS SKU",
 
+	// log any & all events that occur within the application.
 	"verbose" => TRUE,
 
 	// dangerous?
