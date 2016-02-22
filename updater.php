@@ -104,10 +104,10 @@ class SkuUpdater
 	 */
 	private function updateUPC($old_upc,$new_upc) {
 		// get product model, update the upc, and save.
-		$updated_upc_model = Mage::getModel('catalog/product')
-			->loadByAttribte('upc',$old_upc)
-			->setUPC($new_upc)
-			->save();
+		Mage::getModel('catalog/product')
+		->loadByAttribte('upc',$old_upc)
+		->setUPC($new_upc)
+		->save();
 	}
 
 	/**
