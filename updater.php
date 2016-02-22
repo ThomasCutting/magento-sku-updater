@@ -68,22 +68,23 @@ class SkuUpdater
 		$options = $this->resourceOptions;
 
 		foreach ($this->resourceArray as $row) {
-			// everytime we shift our index up, we unset the current element.	
-			unset($this->resourceArray[$array_index]);
-
-			if($row[$options['status_head']]==$row[$options['status_head_choice_update']]) {
+			if( $row[$options['status_head']] === $options['status_head_choice_update'] ) {
 				// this is the old sku ( we fetch the "head" or "column name" from our internal options )
 				$old_sku = $row[$options['old_sku_head']];
 				// the new sku ( again, we fetch the "head" or "column name" from our internal options )
 				$new_sku = $row[$options['new_sku_head']];
 				
+				if($options['verbose']) {
+					echo "Old SKU: " . $old_sku . " \t New SKU: " . $new_sku . NEWLINE;
+				}
+
 				try {
 					// attempt to update the sku ( save() method is the one that will throw, if at all. )
 					$this->updateSKU($old_sku,$new_sku);
 				} catch(Exception $e) {
 					error_log($e->getTraceAsString());
 				}
-			} else if($row[$options['status_head']]==$row[$options['status_head_choice_delete']]) {
+			} else if( $row[$options['status_head']] === $options['status_head_choice_delete'] ) {
 				// delete the product, by ( old sku )
 				$this->deleteProductBySelector('sku',$row[$options['old_sku_head']]);
 			}
